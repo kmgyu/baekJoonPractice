@@ -11,7 +11,9 @@ def dfs(start):
         temp.append(nums[i])
         dfs(i)
         temp.pop()
+        
 #백트래킹
 
 dfs(0)
 #https://honggom.tistory.com/110
+#돚거했다. itertools보다 빠르다. 직접 짜서그런가?
