@@ -3,7 +3,6 @@ class Polynomial :
         self.coef= dict() #dict 써서 10000~~ 일때 계산을 더 빠르게? 한다? 시간복잡도도 빠를수있다?
 
     def degree(self) :
-        
         return max(self.coef.keys())
 
     def display(self, msg="f(x) = "):
@@ -22,7 +21,6 @@ class Polynomial :
     def add(self, b):
         #temp 식 생성
         p = Polynomial()
-        #길이 확인 후, 본인이 더크면 temp에 본인 지정, b를 더함.
         #둘중 더 큰걸 기준으로 제어변수 범위를 설정한다.
         #if문 길게 쓸 필요 없어졌다. 굳굳~
         p.coef = dict(self.coef)
@@ -44,7 +42,6 @@ class Polynomial :
     ########### 뺄셈, 곱셈 함수##############
     def substract(self, b): #빼기
         p = Polynomial()
-        #길이 확인 후, 본인이 더크면 temp에 본인 지정, b를 뺌.
         p.coef = dict(self.coef)
         for i in range(max(self.degree(), b.degree())+1): 
             if i in p.coef and i in b.coef:
@@ -87,5 +84,6 @@ print(" C(2) = ", c.eval(2))
 # 테스트 객체+
 d = a.multiply(b)
 d.display()
+print(d.eval(2))
 e = a.substract(b)
 e.display()
