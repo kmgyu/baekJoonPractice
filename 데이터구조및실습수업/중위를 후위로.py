@@ -25,7 +25,6 @@ def pull():
         elif temp == ')':
             continue
         answer.append(temp)
-        
 
 for i in question:
     if i in operator:
@@ -40,7 +39,7 @@ for i in question:
         elif stack and operator.index(i)//2 <= operator.index(stack[-1])//2: #priority high to low
             pull()
         stack.append(i)
-    else:A+B*C
+    else:
         answer.append(i)
 pull()
 print(*answer, sep="")

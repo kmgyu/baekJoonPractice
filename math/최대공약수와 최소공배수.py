@@ -4,8 +4,8 @@
 # 안나오면 1이 되는거고. 나누어 떨어지는 수가 이때 최소공약수가 된다.
 a, b = map(int, input().split())
 num = a*b
-if a < b :
-    a, b = b, a
+# if a < b : 정렬은 없어도 무관.
+#     a, b = b, a
 while b > 0:
     temp = a
     a = b
