@@ -49,18 +49,8 @@ def check(s):
 
 def checkV2(lines):
     myStack = Stack()
-    stringJumper = False
     for s in range(len(lines)):
         for i in range(len(lines[s])):
-            if lines[s][i] == "#" : continue # 주석은 fun하고 cool하고 sexy하게 넘기다.
-            
-            if stringJumper and lines[s][i] == '"': #stringJumper로 문자열은 fun하고 cool하고 sexy하게 넘긴다.
-                stringJumper = False #점퍼가 True이며, 따옴표가 나왔다는건 안넘겨도 된다는? 뜻. false로 전환하고 조건문 넘어감
-            elif stringJumper: #True면 점프. 앞에서 따옴표인지 먼저 검사해줘야 한다.
-                continue
-            elif lines[s][i] == '"': #처음 따옴표를 만났을 때 작동한다.
-                stringJumper = True
-            
             if lines[s][i] in gwal1: # ) } ] 중 하나
                 if not myStack.isEmpty():
                     
