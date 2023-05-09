@@ -47,19 +47,19 @@ def check(s):
     return False
 
 
-def checkV2(lines):
+def checkV2(filename, lines):
     myStack = Stack()
     stringJumper = False
     for s in range(len(lines)):
         for i in range(len(lines[s])):
             if lines[s][i] == "#" : break # 주석은 fun하고 cool하고 sexy하게 넘기다. 한줄 완전히 넘김.
             
-            if stringJumper and lines[s][i] == '"': #stringJumper로 문자열은 fun하고 cool하고 sexy하게 넘긴다.
+            if stringJumper == lines[s][i] : #stringJumper로 문자열은 fun하고 cool하고 sexy하게 넘긴다.
                 stringJumper = False #점퍼가 True이며, 따옴표가 나왔다는건 안넘겨도 된다는? 뜻. false로 전환하고 조건문 넘어감
             elif stringJumper: #True면 점프. 앞에서 따옴표인지 먼저 검사해줘야 한다.
                 continue
-            elif lines[s][i] == '"': #처음 따옴표를 만났을 때 작동한다.
-                stringJumper = True
+            elif lines[s][i] in ['"', "'"] : #처음 따옴표를 만났을 때 작동한다.
+                stringJumper = lines[s][i]
             
             if lines[s][i] in gwal1: # ) } ] 중 하나
                 if not myStack.isEmpty():
@@ -70,16 +70,17 @@ def checkV2(lines):
                         myStack.pop()
                     else:
                         errorMsg(3, s, i)
-                        return False #일치하지 않으면 브리끼
+                        return #일치하지 않으면 브리끼
                 else: 
                     errorMsg(2, s, i)
-                    return False #스택 비어있으면 브리끼
+                    return #스택 비어있으면 브리끼
             elif lines[s][i] in gwal2: myStack.push(lines[s][i]) #여는 괄호면 푸시
     
     if myStack.isEmpty(): #스택 비어있으면 브리끼
-        return True
+        print(filename, "--->", True) #True이면 0 반환.
+        return 0
     errorMsg(1, s, i)
-    return False
+    return
 
 #errorMassage printer
 def errorMsg(code, line, text): 
@@ -98,8 +99,7 @@ infile = open(filename, "r", encoding="utf-8")
 lines = infile.readlines()
 infile.close()
 
-result = checkV2(lines)
-print(filename, "--->", result)
+checkV2(filename, lines)
 #소스파일 괄호읽기프로그램 작성하기
 
 # rule 1 : left bracket num = right bracket num

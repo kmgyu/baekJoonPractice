@@ -47,7 +47,7 @@ def check(s):
     return False
 
 
-def checkV2(lines):
+def checkV2(filename, lines):
     myStack = Stack()
     for s in range(len(lines)):
         for i in range(len(lines[s])):
@@ -60,16 +60,17 @@ def checkV2(lines):
                         myStack.pop()
                     else:
                         errorMsg(3, s, i)
-                        return False #일치하지 않으면 브리끼
+                        return #일치하지 않으면 브리끼
                 else: 
                     errorMsg(2, s, i)
-                    return False #스택 비어있으면 브리끼
+                    return#스택 비어있으면 브리끼
             elif lines[s][i] in gwal2: myStack.push(lines[s][i]) #여는 괄호면 푸시
     
     if myStack.isEmpty(): #스택 비어있으면 브리끼
-        return True
+        print(filename, "--->", True) #True이면 0 반환.
+        return 0
     errorMsg(1, s, i)
-    return False
+    return
 
 #errorMassage printer
 def errorMsg(code, line, text): 
@@ -88,8 +89,8 @@ infile = open(filename, "r", encoding="utf-8")
 lines = infile.readlines()
 infile.close()
 
-result = checkV2(lines)
-print(filename, "--->", result)
+checkV2(filename, lines)
+
 #소스파일 괄호읽기프로그램 작성하기
 
 # rule 1 : left bracket num = right bracket num
