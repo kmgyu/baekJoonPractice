@@ -73,7 +73,7 @@ def checkV2(lines):
 
 #errorMassage printer
 def errorMsg(code, line, text): 
-    print(f"{code, line, text}", sep = ", ")
+    print(f"error find: {code, line, text}", sep = ", ")
 
 # s = input()
 # if check(s):

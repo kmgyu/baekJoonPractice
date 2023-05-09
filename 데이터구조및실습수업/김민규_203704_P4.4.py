@@ -52,7 +52,7 @@ def checkV2(lines):
     stringJumper = False
     for s in range(len(lines)):
         for i in range(len(lines[s])):
-            if lines[s][i] == "#" : continue # 주석은 fun하고 cool하고 sexy하게 넘기다.
+            if lines[s][i] == "#" : break # 주석은 fun하고 cool하고 sexy하게 넘기다. 한줄 완전히 넘김.
             
             if stringJumper and lines[s][i] == '"': #stringJumper로 문자열은 fun하고 cool하고 sexy하게 넘긴다.
                 stringJumper = False #점퍼가 True이며, 따옴표가 나왔다는건 안넘겨도 된다는? 뜻. false로 전환하고 조건문 넘어감
@@ -83,7 +83,7 @@ def checkV2(lines):
 
 #errorMassage printer
 def errorMsg(code, line, text): 
-    print(f"{code, line, text}", sep = ", ")
+    print(f"error find: {code, line, text}", sep = ", ")
 
 # s = input()
 # if check(s):
