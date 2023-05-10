@@ -14,6 +14,5 @@ while True:
             break
         graph.add(index)
         index = (a*(index**2)+b)%n
-
     print(n - (len(graph) - man.index(index)))
     # for i in range(0, n, (a*i+b)%n)

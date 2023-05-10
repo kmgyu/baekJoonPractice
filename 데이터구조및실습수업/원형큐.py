@@ -50,3 +50,6 @@ q.display()
 # 하나 삽입하고 없애보셈.
 # 수학적 사고 + 알고리즘적 사고가 필요한 법이다..
 # front와 rear가 움직이는 것이 어렵다..흑흑
+
+#queue module, heap q module에 priorityqueue있음
+#성능은 heapq가 더 좋음.
