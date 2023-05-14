@@ -28,7 +28,6 @@ def star(n) :
         return li
 for arr in star(n):
     print(arr) #문자열 출력
-
 # 내가 만든 비효율적인 답
 # while n > 3:
 #     temp = []
