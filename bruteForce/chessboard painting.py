@@ -18,7 +18,6 @@ for i in range(N):
 
     oppo_W, oppo_B = oppo_B, oppo_W #매 라인마다 모범타일 반전
     question_list.append(ans_temp) #만들어진 ans를 question_list에 삽입
-
 answer_list = []
 #N과 M으로 8*8 자르기
 cur_x = 0
