@@ -1,0 +1,5 @@
+n = int(input())
+candy = list(map(int, input().split()))
+odd = sorted([i for i in candy if i%2==1])
+if len(odd)%2 == 1:print(sum(candy)-odd[0])
+else:print(sum(candy))
