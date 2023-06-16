@@ -1,5 +1,5 @@
 
-class MinHeap:  # Tree Node를 요소로 받는다.
+class MinHeap:  # Tree Node를 요소로 받는다. 노드의 빈도속성을 기준으로 비교한다.
     def __init__(self): #교재의 코드를 수정하여 Minimum Heap으로 수정함.
         self.heap = []
         self.heap.append(0)
@@ -41,7 +41,7 @@ class MinHeap:  # Tree Node를 요소로 받는다.
 
 class Node:
     def __init__(self, freq, data): #frequency, data
-        self.freq = freq
+        self.freq = freq #빈도
         self.data = data #들어갈 문자
         self.left = None
         self.right = None
@@ -60,28 +60,22 @@ def make_tree(freq):
         e3.left = e1 #자식노드 이어주기.
         e3.right = e2
         heap.insert(e3) #힙 트리에 넣어줌.
-    return heap.delete() #최종적으로 이진트리 반환. minHeap은 사용만 할 뿐 이를 반환하지 않게 주의하자.
+    return heap.delete() #최종적으로 이진트리 반환.
 
 def preorder(n): #전위순회방식. 이걸 사용한다고 리프노드를 최솟값부터 출력하진 않는다...
     print("Nodes by PreOrder: ", end="")
     huffmanTable = dict() # 코드표를 저장할 딕셔너리.
-    stack = [[n, '']]
+    stack = [[n, '', '']] #node, distance, direction
     
     while stack: #재귀는 반복문으로 구현이 가능하다...
-        node, distance = stack.pop()
+        node, distance, direction = stack.pop()
         if node is not None: #!=을 해도 될 것 같지만... 코드 이해를 위해...
-            print((node.freq, node.data, distance), end="")
-            stack.append([node.right, distance + '0'])
-            stack.append([node.left, distance + '1'])
+            print((node.freq, node.data, direction), end=" ") # nodes by preorder의 출력을 만족시키기 위해 direction을 추가했다.
+            stack.append([node.right, distance + '0', 0])
+            stack.append([node.left, distance + '1', 1])
             if node.left == node.right == None: #리프노드일때 허프만 코드표에 등록. 순회와 동시에 테이블에 등록한다.
                 huffmanTable[node.data] = distance #따라서 테이블을 만들기 위해 추가적인 조회를 할 필요가 없어졌다.
-                #어차피 전위식이라 왼쪽부터 등록하니 별도로 처리해주지 않아도 된다!
     print()
-    
-    # if n is not None: 재귀로 구현한거. 여기선 dis=''라고 parameter 초깃값 설정해서 넣어주었다.
-    #     print((n.freq, n.data, dis), end="")
-    #     preorder(n.left, dis+'1')
-    #     preorder(n.right, dis+'0')
     return huffmanTable #코드표를 반환한다. 코드가 좀 많이 복잡해졌다....
 
 def tablePrint(huffmanTable): #코드표에 저장해둔걸 출력한다.
