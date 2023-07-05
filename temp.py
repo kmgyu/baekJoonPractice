@@ -1,11 +1,7 @@
-d = ['W', 'N', 'E', 'S']
-dd = 1
-for i in range(10):
-    t  = int(input())
-    if t == 1:
-        dd += 1
-    if t == 2:
-        dd += 2
-    if t == 3:
-        dd -= 1
-print(d[dd%4])
+while True:
+    s = input().strip().lower()
+    if s == "#":break
+    
+    c = s[0]
+    s1 = s[2:]
+    print(c, s1.count(c))
