@@ -2,8 +2,9 @@ from sys import stdin
 from collections import deque
 input = stdin.readline
 #다익스트라 알고리즘
+
+t = 1
 while True:
-    t = 1
     n = int(input())
     if n == 0: break
     path = []
