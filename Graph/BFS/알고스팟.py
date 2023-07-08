@@ -7,8 +7,8 @@ dy = [0, 0, 1, -1]
 
 def bfs():
     q = deque()
-    q.append((1,1))
-    
+    q.append((0,0))
+    visited[0][0] = 0
     while q:
         a, b = q.popleft()
         for i in range(4):
@@ -16,35 +16,19 @@ def bfs():
             cy = b + dy[i]
             
             if cx < 0 or cy < 0 or cx >= n or cy >= m: continue
-            if cx == cy == 0 : continue
             
-            
-            if visited[cx][cy] == 0:
+            if visited[cx][cy] == -1:
                 if board[cx][cy] == 0:
                     visited[cx][cy] = visited[a][b]
-                    if cx == n-1 and cy == m-1: continue
-                    q.appendleft((cx, cy))
-                    
+                    q.appendleft((cx,cy))
                 else:
+                    visited[cx][cy] = visited[a][b] + board[cx][cy]
                     q.append((cx,cy))
-                    visited[cx][cy] = visited[a][b]+1
-                    
-            elif visited[cx][cy] > visited[a][b] and board[cx][cy] == 0:
-                visited[cx][cy] = visited[a][b]
-                if cx == n-1 and cy == m-1: continue
-                q.appendleft((cx,cy))
-                
-            elif visited[cx][cy] > visited[a][b]-1:
-                q.append((cx,cy))
-                visited[cx][cy] = visited[a][b]+1
-    
 
-
-
-n, m = map(int, input().split())
+m, n = map(int, input().split())
 board = [list(map(int, input().rstrip())) for _ in range(n)]
-visited = [[0] * m for _ in range(n)]
+visited = [[-1] * m for _ in range(n)]
 
 bfs()
-print(*visited, sep="\n")
+
 print(visited[n-1][m-1])
