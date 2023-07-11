@@ -1,16 +1,14 @@
-# 0-1 BFS + 데이크스트라
 import sys
 from collections import deque
 input = sys.stdin.readline
 
-dx = [1, 0, -1, 0]
-dy = [0, 1, 0, -1]
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
 
-
-def bfs(x, y):
+def bfs():
     q = deque()
-    q.append((x, y))
-    
+    q.append((0,0))
+    visited[0][0] = 0
     while q:
         a, b = q.popleft()
         for i in range(4):
@@ -19,15 +17,18 @@ def bfs(x, y):
             
             if cx < 0 or cy < 0 or cx >= n or cy >= m: continue
             
-            # 0 - 1 BFS
-            if visited[cx][cy] == 0: # 첫 방문
-                print("blah")
-            
-        
-    
+            if visited[cx][cy] == -1:
+                if board[cx][cy] == 0:
+                    visited[cx][cy] = visited[a][b]
+                    q.appendleft((cx,cy))
+                else:
+                    visited[cx][cy] = visited[a][b] + board[cx][cy]
+                    q.append((cx,cy))
 
+m, n = map(int, input().split())
+board = [list(map(int, input().rstrip())) for _ in range(n)]
+visited = [[-1] * m for _ in range(n)]
 
-m, n = map(int, input().split()) #가로 m, 세로 n
-maze = [list(map(int, input().rstrip())) for _ in range(n)]
-visited = [[0] * m for _ in range(n)] # 방문 및 거리
+bfs()
 
+print(visited[n-1][m-1])
