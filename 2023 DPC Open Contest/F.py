@@ -1,15 +1,17 @@
-import sys
-sys.setrecursionlimit(10**9+1)
-
-def koch(n, a):
-    global mod
-    ans = 1
-    for i in range(1, a+1):
-        length = pow(n, i-1, mod)
-        ans = ((n-1) * (ans + length))%mod
-    return ans
-
 mod = 1000000007
-n, a = map(int, input().split())
 
-print(koch(n,a)*n%mod)
+def pow(n, a):
+    if a == 1:
+        return n % mod
+    if a % 2 == 1:
+        b = pow(n, a//2)
+        return (b*b*n) % mod
+    b = pow(n, a//2)
+    return b*b
+
+n, a = map(int, input().split())
+b = pow(n, a+1)
+c = pow(n-1, a)
+ans = (n-2)*(b-c*n)+b
+ans %= mod
+print(ans)
