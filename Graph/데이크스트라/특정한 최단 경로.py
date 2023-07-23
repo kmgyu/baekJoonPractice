@@ -1,19 +1,21 @@
 from heapq import heappush, heappop
+from math import inf
 import sys
 input = sys.stdin.readline
 
 def bfs(n1):
     global v1, v2, n
-    visited = [-1]*(n+1)
+    visited = [inf]*(n+1)
     heap = []
-    heap.append(n1)
+    heap.append((0, n1))
     visited[n1] = 0
     while heap:
-        node = heappop(heap)
+        edge, node = heappop(heap)
+        if edge > visited[node] : continue
         for v, e in graph[node]:
-            if visited[v] == -1 or visited[v] > visited[node]+e:
-                visited[v] = visited[node]+e
-                heappush(heap, v)
+            if visited[v] > edge+e:
+                visited[v] = edge+e
+                heappush(heap, (visited[v], v))
     return visited[v1], visited[v2], visited[n]
 
 n, e = map(int, input().split())
@@ -31,6 +33,6 @@ v1, v2 = map(int, input().split()) # 반드시 지나야함
 start = bfs(1)
 v1s = bfs(v1)
 v2s = bfs(v2)
-if -1 in start: print(-1)
+if inf in start: print(-1)
 else: print(min(start[0] + v1s[1] + v2s[2], start[1]+ v2s[0] + v1s[2]))
 # min(bfs(1, v1) + bfs(v1, v2) + bfs(v2, n), bfs(1, v2) + bfs(v2, v1) + bfs(v1, n))
