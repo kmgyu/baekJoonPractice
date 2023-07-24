@@ -7,14 +7,15 @@ def bfs(n1):
     global v1, v2, n
     visited = [inf]*(n+1)
     heap = []
-    heap.append(n1)
+    heap.append((0, n1))
     visited[n1] = 0
     while heap:
-        node = heappop(heap)
+        edge, node = heappop(heap)
+        if edge > visited[node] : continue
         for v, e in graph[node]:
-            if visited[v] > visited[node]+e:
-                visited[v] = visited[node]+e
-                heappush(heap, v)
+            if visited[v] > edge+e:
+                visited[v] = edge+e
+                heappush(heap, (visited[v], v))
     return visited[v1], visited[v2], visited[n]
 
 n, e = map(int, input().split())
