@@ -25,5 +25,4 @@ for k in range(t):
                 dist[j[1]] = dist[j[0]] + j[2]
                 if i == n-1:
                     a = True
-    if a: print("YES")
-    else: print("NO")
+    print("YES") if a else print("NO")
