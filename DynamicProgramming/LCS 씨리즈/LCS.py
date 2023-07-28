@@ -4,7 +4,6 @@ n = list(input())
 m = list(input())
 
 lcs_list =[[0 for _ in range(len(n) + 1)] for _ in range(len(m) + 1)]
-answer = 0
 
 for i in range(len(n)):
     for j in range(len(m)):
