@@ -1,7 +1,6 @@
-from math import factorial
 n = int(input())
 s = input()
-li = list()
+li = []
 cnt = 0
 while s:
     if s[:4] == "long":
@@ -9,14 +8,15 @@ while s:
         s = s[4:]
         continue
     elif s[:4] != "long":
-        li.append(cnt)
-        cnt = 0
+        if cnt > 0:
+            li.append(cnt)
+            cnt = 0
     s = s[1:]
-if cnt > 0:
-    li.append(cnt)
+if cnt > 0: li.append(cnt)
+dp = [1, 1]
+t = 3
+if li: t = max(li)
+for i in range(2, t+1): dp.append(dp[-1]+dp[-2])
 ans = 1
-print(li)
-for i in li:
-    if i < 2: continue
-    ans *= int(factorial(i)/(factorial(2)*factorial(i-2)))
+for i in li: ans *= dp[i]
 print(ans)
