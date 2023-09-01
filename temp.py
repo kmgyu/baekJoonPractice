@@ -1,51 +1,14 @@
-import sys
-from math import dist
-input = sys.stdin.readline
-
-def solve():
-    while True:
-        cnt = 0
-        matrix[15][15] = -1
-        for i in range(n):
-            x, y = coor[i]
-            if x == y == 15:
-                cnt += 1
-                if cnt == n: return
-                continue
-            distance = 1e9
-            mover = ('', 0, 0)
-            for key, value in move.items():
-                dx, dy = value
-                if x+dx > 30 or x+dx < 0 or y+dy > 30 or y+dy < 0: continue
-                if matrix[x+dx][y+dy] != -1:
-                    continue
-                if (x+dx, y+dy) in middle[i]:continue
-                d1 = abs(int(dist((x+dx, y+dy), (15, 15))))
-                if d1 < distance:
-                    distance = d1
-                    mover = (key, dx, dy)
-                    if d1 == 0: break
-            answer[i].append(mover[0])
-            middle[i].add((x+mover[1], y+mover[2]))
-            matrix[x+mover[1]][y+mover[2]], matrix[x][y] = matrix[x][y], matrix[x+mover[1]][y+mover[2]]
-            # print(*matrix, sep="\n")
-            coor[i] = (x+mover[1], y+mover[2])
-
-move = {'A':(-1, 0), 'Q':(-1, 1), 'W':(0, 1),
-        'E':(1, 1), 'D':(1, 0), 'C':(1, -1),
-        'X':(0, -1), 'Z':(-1, -1)}
+def solve(i):
+    print("____"*i + "\"재귀함수가 뭔가요?\"")
+    if i == n:
+        print("____"*i + "\"재귀함수는 자기 자신을 호출하는 함수라네\"")
+        print("____"*i + "라고 답변하였지.")
+        return
+    print("____"*i + "\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.")
+    print("____"*i + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.")
+    print("____"*i + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"")
+    solve(i+1)
+    print("____"*i + "라고 답변하였지.")
 n = int(input())
-hero = [map(int, input().split()) for _ in range(n)]
-matrix = [[-1]*31 for _ in range(31)]
-answer = [[] for _ in range(n)]
-coor = []
-for i in range(n):
-    x, y = hero[i]
-    matrix[x+15][y+15] = i
-    coor.append((x+15, y+15))
-middle = [set() for _ in range(n)]
-for i in range(n):
-    middle[i].add(coor[i])
-solve()
-for ans in answer:
-    print(*ans, sep="")
+print("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.")
+solve(0)
