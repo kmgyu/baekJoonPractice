@@ -1,11 +1,4 @@
-def solve(t):
-    n = t
-    dp = [0]*(n+1)
-    for i in range(1, n+1):
-        for j in range(1, n+1, i):
-            dp[i] += 1
-    print(*dp)
-    print(n, "=", sum(dp))
-
-for i in range(1, 20):
-    solve(i)
+from math import pi
+r = int(input())
+print(f"{r**2*pi:6f}")
+print(f"{r**2*2:6f}")

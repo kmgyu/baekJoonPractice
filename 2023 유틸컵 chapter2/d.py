@@ -9,7 +9,9 @@ for i in range(t):
     s, k = input().split()
     if k[-1] == "%":
         k = str(m*int(k[:-1]))[:-2]
-    if k == '': k = 0
+        if k == '': k = 0
+    k = int(k)
+    k = min(m, k)
     tier.append((s, int(k)))
     # actu.add(s)
     m -= int(k)
