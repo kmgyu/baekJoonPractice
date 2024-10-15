@@ -5,14 +5,13 @@ def dfs(start, end):
     stack = [start]
     while stack:
         current = stack.pop()
-        print(current, end=' ')
-        if current == end:
-            return True
         if current not in visited:
+            print(current, end=' ')
             visited.add(current)
             index = vertex.index(current)
             for i in range(length):
                 if adjMat[index][i]: stack.append(vertex[i])
+        if current == end: return True
     return False
 
 vertex = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']

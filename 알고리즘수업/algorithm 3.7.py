@@ -8,6 +8,7 @@ def bfs(start, end):
     q.append(start_index)
     while q:
         current = q.popleft()
+        print(vertex[current], end=' ')
         if current == end_index: return True
         visited[current] = True
         for i in range(len(vertex)):
@@ -25,3 +26,4 @@ adjMat = [[0, 1, 1, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 1, 0, 0, 1],
           [0, 0, 0, 0, 1, 0, 1, 0]]
 
+bfs('A', 'H')
