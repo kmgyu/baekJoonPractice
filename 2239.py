@@ -14,8 +14,8 @@ def checkRow(y, n):
     return True
 
 def checkBlock(x, y, n):
-    cx = x//3 * 3;
-    cy = y//3 * 3;
+    cx = x//3 * 3
+    cy = y//3 * 3
     for i in range(cx, cx+3):
         for j in range(cy, cy+3):
             if board[i][j] == n:
