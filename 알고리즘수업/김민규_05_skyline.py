@@ -65,7 +65,7 @@ def skyline(data):
         stack.append((l,h)) # 조건분기 다끝내면 최종적으로 l을 추가해줌.
         end = r
     stack.append((end,0))
-    if stack[0][0] == 0: return stack[1:] #높이 0이면 슬라이싱해서 뱉는다.
+    if stack[0][1] == 0: return stack[1:] #높이 0이면 슬라이싱해서 뱉는다.
     return stack
 
 
