@@ -36,6 +36,7 @@ def skyline(data):
     n = len(data)
     # 반례 해결을 위해 추가적으로 자료를 찾아봄.
     # 힙을 이용한... 분할 정복...?
+    # 단점 : 0,0 무조건 추가함
     buildings = []
     for i in data:
         heappush(buildings, i)
@@ -49,7 +50,7 @@ def skyline(data):
                 stack.append((end,0))
                 stack.append((l,h))
             else: # 건물 연장
-                if stack and h != stack[-1][1]: # 높이 다르면 추가
+                if not stack or h != stack[-1][1]: # 높이 다르면 추가
                     stack.append((l,h))
             end = r
             continue
@@ -61,50 +62,13 @@ def skyline(data):
             heappush(buildings,[r,stack[-1][1],end])
         if stack and l == stack[-1][0]: # x가 같으면 pop
             stack.pop()
-        stack.append((l,h))
+        stack.append((l,h)) # 조건분기 다끝내면 최종적으로 l을 추가해줌.
         end = r
     stack.append((end,0))
+    if stack[0][0] == 0: return stack[1:] #높이 0이면 슬라이싱해서 뱉는다.
     return stack
 
-from queue import PriorityQueue
 
-class Solution:
-    def getSkyline(self, buildings: list[list[int]]) -> list[list[int]]:
-        # Initialize the skyline results array, a list to store building edges,
-        # and a priority queue to manage the current highest buildings
-        skyline = []
-        edges = []
-        max_heights = PriorityQueue()
-      
-        # Create a sorted list of all critical points (building start and end)
-        for building in buildings:
-            edges.extend([building[0], building[1]])
-        edges.sort()
-      
-        # Initialize pointers and get the total number of buildings
-        building_index, total_buildings = 0, len(buildings)
-
-        # Process each edge in the sorted list to determine skyline changes
-        for edge in edges:
-            # Add buildings to the priority queue which start before or at the current edge
-            while building_index < total_buildings and buildings[building_index][0] <= edge:
-                # Insert into the priority queue the negative height (to reverse the default order),
-                # the start, and the end of the current building
-                max_heights.put([-buildings[building_index][2], buildings[building_index][1]])
-                building_index += 1
-          
-            # Remove buildings from priority queue which end before the current edge
-            while not max_heights.empty() and max_heights.queue[0][1] <= edge:
-                max_heights.get()
-
-            # The height is 0 if there are no buildings in sight, or the highest if there are
-            height = -max_heights.queue[0][0] if not max_heights.empty() else 0
-          
-            # Only add a point to the skyline if the height changes from the last point
-            if not skyline or skyline[-1][1] != height:
-                skyline.append([edge, height])
-      
-        return skyline
 
 # test driver
 # start, height, end
@@ -122,7 +86,3 @@ print(skyline_pseudo(input3)) # [[1, 2], [2, 0]] 나와야함. 반례. 추가적
 print(skyline(input1))
 print(skyline(input2))
 print(skyline(input3)) # 반례 해결. 그러나 이번엔 테스트 1, 2가 문제다...
-
-print(Solution().getSkyline(input1))
-print(Solution().getSkyline(input2))
-print(Solution().getSkyline(input3))
