@@ -85,4 +85,4 @@ print(skyline_pseudo(input3)) # [[1, 2], [2, 0]] 나와야함. 반례. 추가적
 
 print(skyline(input1))
 print(skyline(input2))
-print(skyline(input3)) # 반례 해결. 그러나 이번엔 테스트 1, 2가 문제다...
+print(skyline(input3)) # 반례 해결. 그러나 이번엔 테스트 1, 2가 문제다... 해결했다.
