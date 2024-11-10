@@ -1,42 +1,46 @@
 def skyline_pseudo(array):
-    # 수도코드를 그대로 작성했다.
+    # 수도코드 기반 코드
     # 합병 정렬을 응용한 알고리즘. 합병 과정에서 차지하는 메모리를 조금씩 줄인다.
     # O(nlogn)의 시간복잡도를 가진다.
+    # 백준에서 시간을 재보니 아래의 힙을 이용한 풀이보다 빨랐다.
     if len(array) == 1:
         return [[array[0][0], array[0][1]], [array[0][2], 0]]
     mid = len(array)//2
     ans = []
+    # 분할
     left = skyline_pseudo(array[:mid])
     right = skyline_pseudo(array[mid:])
     
-    left_pointer = 0
-    right_pointer = 0
-    currentx = 0
-    while left and right:
-        # print(left[0], right[0])
-        if left[0][0] < right[0][0]:
-            currentx = left[0][0]
-            left_pointer = left[0][1]
-            left.pop(0)
-        else:
-            currentx = right[0][0]
-            right_pointer = right[0][1]
-            right.pop(0)
-        if not ans or max(left_pointer, right_pointer) != ans[-1][1]:
+    # 합병 과정에서 keypoint 비교, 정렬과 함께 높이 비교. 필요없는 건 제거하며 공간 최적화
+    l, r = 0,0 # two pointer
+    l_h, r_h = 0,0 # left, right 높이
+    currentx = 0 # 현재 x좌표
+    l_len, r_len = len(left), len(right)
+    while l<l_len and r<r_len:
+        if left[l][0] < right[r][0]:
+            currentx, l_h = left[l]
+            l+=1
+        elif left[l][0] > right[r][0]:
+            currentx, r_h = right[r]
+            r+=1
+        else: # 좌표 같을 시 둘 다 내보내서 비교한다. 수도코드에는 없는 부분이었는데, 이 때문에 반례가 발생했었다.
+            currentx, l_h = left[l]
+            r_h = right[r][1]
+            l+=1
+            r+=1
+        if not ans or max(l_h, r_h) != ans[-1][1]:
             # keypoint가 아무것도 존재하지 않거나, 높이가 다를 때만 추가.
             # 이렇게 안하면 각 사각형별로 겹치는 구간에서 point가 생성된다. 이런 중복데이터 방지용 if문
-            ans.append([currentx, max(left_pointer, right_pointer)])
+            ans.append([currentx, max(l_h, r_h)])
         # print(ans)
-    if not left: ans += right
-    else: ans += left
+    # 남은거 붙이기
+    ans += left[l:] + right[r:]
     return ans
 
 from heapq import heappop, heappush
 def skyline(data):
     n = len(data)
-    # 반례 해결을 위해 추가적으로 자료를 찾아봄.
-    # 힙을 이용한... 분할 정복...?
-    # 단점 : 0,0 무조건 추가함
+    # 힙을 이용한 다른 풀이. 분기문이 매우 많다. 위의 수도코드 기반 코드와 달리 공간 최적화가 없다.
     buildings = []
     for i in data:
         heappush(buildings, i)
@@ -80,7 +84,7 @@ input2 =  [[2, 10, 9], [3, 15, 7], [5, 12, 12], [15, 10, 20],
 input3 = [[1,1,2], [1, 2, 2]]
 print(skyline_pseudo(input1))
 print(skyline_pseudo(input2))
-print(skyline_pseudo(input3)) # [[1, 2], [2, 0]] 나와야함. 반례. 추가적인 코드 필요
+print(skyline_pseudo(input3)) # [[1, 2], [2, 0]] 나와야함. 반례. 추가적인 코드 필요. 해결했다.
 
 
 print(skyline(input1))
