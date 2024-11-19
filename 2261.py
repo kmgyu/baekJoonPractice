@@ -1,6 +1,7 @@
 import sys
 input = sys.stdin.readline
-
+# Plane Sweeping
+# nlogn^2 풀이에서 nlogn으로 개선가능
 def dist(a, b):
     return (a[0] - b[0])**2 + (a[1] - b[1])**2
 
