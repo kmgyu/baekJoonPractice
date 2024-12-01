@@ -19,28 +19,28 @@ def good_suffix(P): # good suffix rule
     bpos[i] = j
     # case 1, suffix is in pattern (except prefix)
     while i>0:
-        print("blahblah")
-        print(i, P[i:], j, P[j:])
-        print(shift, bpos)
+        # print("blahblah")
+        # print(i, P[i:], j, P[j:])
+        # print(shift, bpos)
         while j <= m and P[i-1] != P[j-1]: # find border position (end point? i guess...)
-            # it's similar with shift table
+            # it's similar with shift table. no nevermind i don't get it
             if shift[j] == 0: # 0 == none
                 shift[j] = j-1 # save shift value
             j = bpos[j] # to the next border position. for make it faster
-            print(i, P[i:], j, P[j:])
-            print(shift, bpos)
+            # print(i, P[i:], j, P[j:])
+            # print(shift, bpos)
             # so... if not found a matched char, j will be not discounted. jesus what the hell is this so complicated and unfriendly
         i-=1 # discount both.
         j-=1
         bpos[i] = j # save the last point of border position
-        # additionally, i == 0, 
-    print("case 1 end")
+        # additionally, i == 0, uhh.... idk. what the
+    # print("case 1 end")
     
     # case 2, prefix == suffix
     j = bpos[0]
     for i in range(m+1):
-        print(i, P[i:], j, P[j:])
-        print(shift, bpos)
+        # print(i, P[i:], j, P[j:])
+        # print(shift, bpos)
         if shift[i] == 0: # we already searched except prefix. so we can skip the sub-patterns thas is not 'pre'.
             shift[i] = j # yessss it's saving the shift value
         if i == j: # what the...
@@ -61,14 +61,18 @@ def solve(T, P): #boyer-moore algorithm
             j-=1
         
         if j<0:
-            print(f"pattern found at {s}")
-            s += good_suffix_table[0]
+            print(f"pattern found at {s}") # return quickly
+            # s += good_suffix_table[0]
+            return s
         else:
-            print(f"shift the pattern {s}")
-            s += good_suffix_table[j+1]
+            print(f"shift from pattern {s}")
+            bad = m
+            if T[s+j] in bad_symbol:
+                bad = j-bad_symbol[T[s+j]]
+                
+            if j == 0: s += bad # bad symbol rule...
+            else: s += good_suffix_table[j+1] # good suffix rule. is this a.... well. my brain has melted already
 
 T="I_LOVE_BANANA_YOU_LIKE_APPLE_AND_MANGO"
 P="BANANA"
-print(P)
-print(good_suffix(P))
 solve(T, P)
