@@ -6,7 +6,7 @@ def solve(W, wt, val):
     n = 물건의 개수
     '''
     n = len(wt)
-    A = [[0 for x in range(W+1)] for x in range(n+1)]
+    A = [[0 for _ in range(W+1)] for _ in range(n+1)]
     # K[i][w] = i개의 물건을 고려하고, 배낭의 무게가 w일 때의 최대 가치
     # 0으로 초기화된 2차원 리스트를 생성한다.
     
@@ -18,7 +18,14 @@ def solve(W, wt, val):
                 valWith = val[i-1] + A[i-1][w-wt[i-1]] # 넣는 경우
                 valWithout = A[i-1][w] # 안 넣는 경우
                 A[i][w] = max(valWith, valWithout) # 더 큰 값 선택
+    print(*A, sep='\n')
     return A
+
+# 테스팅
+W=8
+wt=[4, 6, 3]
+val=[30, 50, 70]
+solve(W, wt, val)
 
 # import time
 # import random
