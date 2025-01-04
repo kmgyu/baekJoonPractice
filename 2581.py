@@ -3,7 +3,7 @@ from math import *
 M = int(input())
 N = int(input())
 prime = list(range(M, N+1))
-print("start")
+# print("start")
 for num in range(M, N+1):
     if num == 1:
         prime.remove(num)

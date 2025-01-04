@@ -11,5 +11,5 @@ for num in num:
     for k in range(2, i):
         if num % k == 0:
             count += 1
-            break;
+            break
 print(N-count)
