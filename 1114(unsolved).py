@@ -1,33 +1,36 @@
-def cut(length):
-    global longest
-    if longest > length:
-        return 10001, 0
+def solve():
+    l,k,c = map(int, input().split())
+    cutpoints = sorted(set(map(int, input().split())))+[l]
+    k=len(cutpoints)
+    
+    # 매개변수 탐색
+    def check(tgt):
+        # 오른쪽부터 선형 탐색, target보다 클 경우 잘라내면서 이동
+        right = l
+        cnt = c
+        for i in range(k-1, -1, -1):
+            if cnt==0: break
+            if right-cutpoints[i] > tgt:
+                if cutpoints[i+1] - cutpoints[i] > tgt:
+                    return -1
+                cnt -= 1
+                right = cutpoints[i+1]
+        
+        if cnt: right = cutpoints[0]
+        
+        if right > tgt: return -1
+        else: return right
 
-    cur_len = 0
-    count = 0
-    for piece_len in pieces:
-        cur_len += piece_len
-        if cur_len > length:
-            cur_len = piece_len
-            count += 1
+    start, end = l//(c+1), l
+    mid, pnt = 0, 0
 
-    return count, cur_len if count == c else pieces[-1]
-
-l,k,c = map(int, input().split())
-cutpoints = [0]+sorted(set(map(int, input().split())))+[l]
-pieces = [cutpoints[i+1] - cutpoints[i] for i in range(1, k+1)]
-longest = max(pieces)
-
-start, end = 0, l
-ans_piece, ans_len = 0,0
-
-while start <= end:
-    mid = (start + end) // 2
-    cnt, pt = cut(mid)
-    if cnt <= c:
-        ans_pt = pt
-        ans_len = mid
-        end = mid-1
-    else:
-        start = mid+1
-print(ans_len, ans_pt)
+    # 이분탐색
+    while start < end:
+        mid = (start + end) // 2
+        pnt = check(mid)
+        # print(start, end, mid, pnt)
+        if pnt > 0: end = mid
+        else: start = mid+1
+    # 작은 것부터이므로, 가장 작은 절단 점 출력
+    print(start, check(start))
+solve()
