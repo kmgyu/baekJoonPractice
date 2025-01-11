@@ -17,5 +17,4 @@ def euler_p(N):
     return ans
 
 ans = euler_p(n)
-
-print(int(ans))
+print(ans)
