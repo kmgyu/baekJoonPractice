@@ -10,36 +10,39 @@ def seat_check(seats, bit, width):
 def adj_check(bit, width):
     for i in range(width-1):
         val = 3 << i
-        if (bit & val) == val: return False
+        if (bit & val) == val:
+            return False
     return True
 
 # check with front
 def bits_check(bit, fbit, width):
     for i in range(width):
         if (1 << i) & fbit:
-            if i > 0 and ((1 << (i-1)) & bit): return False # 왼쪽 뒤에 앉음
-            if (i << (i+1)) & bit: return False # 오른쪽 뒤에 앉음
+            if i > 0 and ((1 << (i-1)) & bit):
+                return False # 왼쪽 뒤에 앉음
+            if (1 << (i+1)) & bit:
+                return False # 오른쪽 뒤에 앉음
     return True
 
-def solve(N, M, desk):
+def solve():
+    N, M = map(int, input().split())
+    desk = ['']+[input().strip() for _ in range(N)]
     ans = 0
-    dp = [[0 for _ in range(2**M)] for _ in range(N+1)]
+    dp = [[0 for _ in range(1<<M)] for _ in range(N+1)]
     
     bits = []
-    for bit in range(2**M):
+    for bit in range(1<<M):
         if adj_check(bit, M):
-            cnt = 0
-            for i in range(M):
-                if (1<<i) & bit: cnt += 1
+            cnt = bin(bit).count('1')
             bits.append((bit, cnt))
     
-    for i in range(N):
-        for bit in bits:
-            if not seat_check(desk[i], bit[0], M): continue
-            for fbit in bits:
-                if bits_check(bit[0], fbit[0], M):
-                    dp[i][bit[0]] = max(dp[i][bit[0]], dp[i-1][fbit[0]] + bit[1])
-                    ans = max(ans, dp[i][bit[0]])
+    for i in range(1,N+1):
+        for bit, cnt in bits:
+            if not seat_check(desk[i], bit, M): continue
+            for fbit, _ in bits:
+                if bits_check(bit, fbit, M):
+                    dp[i][bit] = max(dp[i][bit], dp[i-1][fbit] + cnt)
+                    ans = max(ans, dp[i][bit])
     print(ans)
 
 
@@ -47,7 +50,5 @@ input = open(0).readline
 T = int(input())
 
 for _ in range(T):
-    N, M = map(int, input().split())
-    desk = [input().strip() for _ in range(N)]
-    solve(N, M, desk)
+    solve()
 
