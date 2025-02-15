@@ -5,6 +5,9 @@
 # 굉장히... 으에... 에///?? 문제.. 몬가ㅣ.... 으에...
 # https://restudycafe.tistory.com/470
 
+# https://velog.io/@gmtmoney2357/%EC%9D%B4%EB%B6%84-%EB%A7%A4%EC%B9%ADBipartite-Matching
+# 이분매칭 레퍼런스 추가.
+
 input = open(0).readline
 
 
