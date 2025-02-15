@@ -21,15 +21,12 @@ dir = [
 
 
 def solve():
-    adj = []
-    left = []
-    right = []
-    visited = []
     
     def dfs(x):
+        # print(x)
         # x : current, y : next
         visited[x] = True
-        for i in range(adj[x]):
+        for i in range(len(adj[x])):
             y = adj[x][i]
             if right[y] == -1 or (not visited[right[y]] and dfs(right[y])):
                 left[x], right[y] = y, x
@@ -37,22 +34,33 @@ def solve():
         return False
     
     N, M = map(int, input().split())
-    room = [input() for _ in range(N)]
+    room = ['x'*M]+[input() for _ in range(N)]
     cnt = sum([room[i].count('.') for i in range(N)])
     
-    for i in range(N):
-        for j in range(M):
+    LENGTH = (80**2)+5
+    
+    adj = [[] for _ in range(LENGTH)]
+    left = [-1]*LENGTH
+    right = [-1]*LENGTH
+    visited = []
+    
+    for i in range(1, N+1):
+        for j in range(1, M+1):
             for k in range(6):
                 if room[i][j] == 'x': continue
                 cx = i + dir[k][0]
                 cy = j + dir[k][1]
-                if 1 <= cx <= N and 1 <= cy <= M and room[cx][cy] == '.':
+                if 1 <= cx < N and 1 <= cy < M and room[cx][cy] == '.':
                     adj[(i-1)*80 + j].append((cx-1)*80 + cy)
     
     match = 0
+    for i in range(1, N+1):
+        for j in range(1, M+1):
+            visited = [False]*LENGTH
+            if dfs( (i-1)*80+j ): match += 1
+    print(cnt - match)
     
-        
-    
-    pass
 
 T = int(input())
+for i in range(T):
+    solve()
