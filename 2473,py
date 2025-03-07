@@ -1,0 +1,34 @@
+def two_pointer(l, r, value):
+    left, right = l, r
+    ans_l, ans_r = l, r
+    last_v = float('inf')
+    while left < right:
+        v = samples[left] + samples[right] + value
+        
+        if abs(last_v) > abs(v):
+            ans_l, ans_r = left, right
+            last_v = v # recent best value update
+        if v == 0:
+            break
+        elif v < 0: left += 1
+        else: right -= 1
+    return ans_l, ans_r
+
+input = open(0).readline
+
+N = int(input())
+samples = sorted(map(int, input().split()))
+
+# print(*samples)
+
+best = float('inf')
+ans = (-1, -1, -1)
+for i in range(N-2):
+    l, r = two_pointer(i+1, N-1, samples[i])
+    tmp = samples[i] + samples[l] + samples[r]
+    if abs(tmp) < abs(best):
+        ans = samples[i], samples[l], samples[r]
+        best = tmp
+    if best == 0:
+        break
+print(*ans)
