@@ -25,7 +25,7 @@
 #             mat.append((i, j))
 
 # for i, j in mat: parent[j] = find(parent[i])
-
+# for i in parent: find(parent[i])
 # parent_ = set(parent)
 
 # if len(mat) < (N-1) or -1 in parent_: print(-1)
