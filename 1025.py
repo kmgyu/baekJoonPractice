@@ -22,6 +22,5 @@ for n in range(N):
                     r_cur += r_step
                     c_cur += c_step
                     v = sqrt_check(int(sq))
-                    v2 = sqrt_check(int(sq[::-1]))
-                    ans = max(ans, v, v2)
+                    ans = max(ans, v)
 print(ans)
