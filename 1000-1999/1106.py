@@ -6,10 +6,10 @@ input = sys.stdin.readline
 
 C,N = map(int,input().split())
 hotel = [list(map(int,input().split())) for _ in range(N)]
-dp = [float('inf') for _ in range(max(C, 101))]
+dp = [float('inf') for _ in range(C+100)]
 dp[0]=0
 for cost, num_people in hotel:
-    for i in range(num_people,max(C, 101)):
+    for i in range(num_people,C+100):
         dp[i] = min(dp[i-num_people]+cost,dp[i])
 
 print(min(dp[C:]))
