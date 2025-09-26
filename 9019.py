@@ -8,6 +8,7 @@ def d(num):
     return (num*2)%10000
 
 def s(num):
+    # edge case. 9999를 생각 못했다.
     if num==0: return 9999
     return num-1
 
